@@ -89,8 +89,45 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int insertSortedLL(LinkedList *ll, int item)
-{
-	/* add your code here */
+{  
+  if (!ll) return -1;
+
+  int index = 0;
+
+  ListNode *prev = NULL;
+  ListNode *cur = ll->head;
+
+  while(cur){
+    if (cur->item < item){
+      prev = cur;
+      cur = cur->next;
+      index++;
+    }
+    else if (cur-> item == item){
+      return -1;
+    }
+    else{
+      break;
+    }
+  }
+
+  ListNode *node = (ListNode*)malloc(sizeof(*node));
+
+  if (!node) return -1; // 메모리 할당 실패 시 -1 반환
+  
+  node->item = item;
+  ll->size ++;
+
+  if (prev == NULL){
+    ll->head = node;
+    node->next = cur;
+  }
+  else{
+    prev->next = node;
+    node->next = cur;
+  }
+
+  return index;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,14 @@
+# C build artifacts
+*.o
+a.out
+*.dSYM/
+
+# macOS metadata
+.DS_Store
+
+# Crash dumps
+core
+core.*
+
+# Exercise executables
+/Linked_List/Q[1-7]_A_LL
