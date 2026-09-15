@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 1 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 typedef struct _btnode{
@@ -113,10 +114,13 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int identical(BTNode *tree1, BTNode *tree2)
+int identical(BTNode *tree1, BTNode *tree2){
+  if (!tree1 && !tree2) return 1;
+  if (!tree1 || !tree2) return 0;
 
-{
-   /* add your code here */
+  if (tree1->item != tree2->item) return 0;
+
+  return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
