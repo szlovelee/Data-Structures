@@ -109,7 +109,20 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+  /* add your code here */
+  if (!q || !q->ll.head) return;
+
+  // dequeue
+  ListNode *cur = q->ll.head;
+  q->ll.head = cur->next;
+  int item = cur->item;
+  free(cur);
+  q->ll.size --;
+
+  recursiveReverse(q);
+
+  // queue 의미를 유지하려 하다 보니(linked list식 접근 x), 구현되어 있는 함수 사용.
+  enqueue(q, item);
 }
 
 //////////////////////////////////////////////////////////////////

@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 7 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MIN_INT -1000
 
@@ -83,11 +84,11 @@ int main()
 			printf("Enter expressions without spaces to check whether it is balanced or not: ");
 			scanf("%s", str);
 			break;
-        case 2:
-            if(balanced(str))
-                printf("not balanced!\n");
-            else
-                printf("balanced!\n");
+    case 2:
+        if(balanced(str))
+            printf("balanced!\n");
+        else
+            printf("not balanced!\n");
 			break;
 		case 0:
 			break;
@@ -104,7 +105,44 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+  /* add your code here */
+  if (!expression) return 1;
+
+  Stack stack = (Stack){0};
+  
+  bool is_balanced = true;
+
+  while(*expression != '\0'){
+    char letter = *expression;
+    switch (*expression)
+    {
+    case '(':
+      push(&stack, ')');
+      break;
+    case '{':
+      push(&stack, '}');
+      break;
+    case '[':
+      push(&stack, ']');
+      break;
+    case ')':
+    case '}':
+    case ']':
+      is_balanced = pop(&stack) == letter;
+      break;
+    default:
+      break;
+    }
+
+    if (!is_balanced) break;
+    expression++;
+  }
+
+  if (stack.ll.size > 0) is_balanced = false;
+
+  removeAllItemsFromStack(&stack);
+
+  return is_balanced;
 }
 
 ////////////////////////////////////////////////////////////

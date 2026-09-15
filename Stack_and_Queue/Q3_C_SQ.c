@@ -104,6 +104,46 @@ int main()
 int isStackPairwiseConsecutive(Stack *s)
 {
   /* add your code here */
+  if (!s || !s->ll.head || s->ll.size % 2 != 0) return 0;
+
+  int is_consecutive = 1;    // true
+  ListNode *top = NULL;
+
+  ListNode *first = NULL;
+  ListNode *second = NULL;
+
+  while(s->ll.head){
+    //pop
+    first = s->ll.head;
+    s->ll.head = first->next;
+    //pop
+    second = s->ll.head;
+    s->ll.head = second->next;
+    
+    //push
+    first->next = top;
+    top = first;
+    //push
+    second->next = top;
+    top = second;
+
+    // INT_MAX - INT_MIN의 경우 대비
+    int a = first->item;
+    int b = second->item;
+    
+    is_consecutive = (b != INT_MAX && a == b + 1) || (a != INT_MAX && b == a + 1);
+    if (!is_consecutive) break;
+  }
+
+  while(top){
+    ListNode *temp = top;
+    top = top->next;
+
+    temp->next = s->ll.head;
+    s->ll.head = temp;
+  }
+
+  return is_consecutive;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

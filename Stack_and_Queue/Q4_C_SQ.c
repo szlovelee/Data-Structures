@@ -112,7 +112,39 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+  /* add your code here */
+  if (!q || !q->ll.head) return;
+
+  ListNode *top = NULL;
+
+  while(q->ll.head){
+    //dequeue (queue)
+    ListNode *node = q->ll.head;
+    q->ll.head = node->next;
+
+    //push (stack)
+    node->next = top;
+    top = node;
+  }
+
+  ListNode dummy = (ListNode){0};
+  q->ll.head = &dummy;
+  
+  //rear (queue)
+  ListNode *cur = q->ll.head;
+  while(top){
+    //pop (stack)
+    ListNode *temp = top;
+    top = temp->next;
+    temp->next = NULL;
+
+    //enqueue (queue)
+    cur->next = temp;
+    cur = temp;
+  }
+
+  //dequeue (queue) - dummy 제거
+  q->ll.head = q->ll.head->next;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
