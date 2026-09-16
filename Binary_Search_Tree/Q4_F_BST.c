@@ -91,7 +91,30 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+  /* add your code here */
+  if (!root) return;
+
+  Stack stack = (Stack){0};
+  BSTNode *printed = NULL;
+
+  BSTNode *cur = root;
+  while(cur || !isEmpty(&stack)){
+    while(cur){
+      push(&stack, cur);
+      cur = cur->left;
+    }
+
+    while(!isEmpty(&stack) && 
+      (!peek(&stack)->right || peek(&stack)->right == printed)){
+      cur = pop(&stack);
+      printf("%d ", cur->item);
+      printed = cur;
+    }
+
+    if (isEmpty(&stack)) break;
+    
+    cur = peek(&stack)->right;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -123,7 +146,6 @@ void insertBSTNode(BSTNode **node, int value){
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
 void push(Stack *stack, BSTNode * node)
 {
 	StackNode *temp;
